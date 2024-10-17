@@ -1,0 +1,111 @@
+------- Problem 1 ------
+-> {"id":0,"method":"echo","params":{"message":"Hello"}}
+<- {"id": 0, "result": {"message": "Hello"}}
+-> {"id":1,"method":"echo","params":{"message":"Hello again"}}
+<- {"id": 1, "result": {"message": "Hello again"}}
+-> {"id":0,"method":"echo","params":{"message":"aloha"}}
+<- {"id": 0, "result": {"message": "aloha"}}
+*****************************************************
+Congratulations on completing the first problem!
+The first problem exist to weed out idiots.
+
+Here is the link to Problem 2: https://nubela-gitlab-packages.sgp1.digitaloceanspaces.com/dev-test/c04ee32265e0e6a2c853f6f91878cf8dfe385e3d68848931bf84e60b7cec9f8b.md
+*****************************************************
+------- Problem 2 ------
+-> {"id": 0, "method": "echo",
+-> {"id": 0, "method": "echo",
+-> "params": {"message": "Hello"
+-> }}
+{
+<- {"id": 0, "result": {"message": "Hello"}}
+-> {"id": 0, "method": "echo",
+-> "params": {"message": "Hello"
+-> }}
+{
+<- {"id": 0, "result": {"message": "Hello"}}
+-> "id": "test", "method": "echo",
+-> "params": {"message":
+-> "hello again"}}
+{
+<- {"id": "test", "result": {"message": "hello again"}}
+-> {"id": "w", "method": "echo",
+-> "params": {"message": "hej
+->  monika"}}
+{
+<- {"id": "w", "result": {"message": "hej monika"}}
+*****************************************************
+Congratulations on completing problem 2!
+You are almost there.
+Solve one more problem and you get an interview!
+
+For Problem 3, please visit: https://nubela-gitlab-packages.sgp1.digitaloceanspaces.com/dev-test/8f48939bf9b1dd89184a8929681f21ca84343e3a12e6b6c57ecc713aa03a54c3.md
+*****************************************************
+------- Problem 3 ------
+-------
+Expect: x -> x
+Randomized problem: z -> z
+-> {"id":0,"method":"evaluate","params":{"expression":"z"}}
+<- {"id": 0, "result": {"expression": "z"}}
+Normalize result: z -> z
+z == z
+-------
+Expect: !x.x -> !x.x
+Randomized problem: !a.a -> !z.z
+-> {"id":1,"method":"evaluate","params":{"expression":"!a.a"}}
+<- {"id": 1, "result": {"expression": "!a.a"}}
+Normalize result: !a.a -> !z.z
+!z.z == !z.z
+-------
+Expect: (x y) -> (x y)
+Randomized problem: (y c) -> (y c)
+-> {"id":2,"method":"evaluate","params":{"expression":"(y c)"}}
+<- {"id": 2, "result": {"expression": "(y c)"}}
+Normalize result: (y c) -> (y c)
+(y c) == (y c)
+-------
+Expect: (!x.x y) -> y
+Randomized problem: (!b.b i) -> i
+-> {"id":3,"method":"evaluate","params":{"expression":"(!b.b i)"}}
+<- {"id": 3, "result": {"expression": "i"}}
+Normalize result: i -> i
+i == i
+-------
+Expect: (!x.x x) -> x
+Randomized problem: (!v.v v) -> v
+-> {"id":4,"method":"evaluate","params":{"expression":"(!v.v v)"}}
+<- {"id": 4, "result": {"expression": "v"}}
+Normalize result: v -> v
+v == v
+-------
+Expect: (!x.!y.(y x) (y w)) -> !z.(z (y w))
+Randomized problem: (!j.!v.(v j) (v f)) -> !z.(z (v f))
+-> {"id":5,"method":"evaluate","params":{"expression":"(!j.!v.(v j) (v f))"}}
+<- {"id": 5, "result": {"expression": "(!j.!v.(v j) (v f))"}}
+Normalize result: (!j.!v.(v j) (v f)) -> (!z.!y.(y z) (v f))
+Error: Error while checking problem
+    at checkProblems (/opt/src/question/problems/common.ts:24:19)
+    at process.args (node:internal/process/task_queues:95:5)
+    at main (/opt/src/question/index.ts:5:21) {
+  [cause]: JestAssertionError: expect(received).toEqual(expected) // deep equality
+
+  Expected: "!z.(z (v f))"
+  Received: "(!z.!y.(y z) (v f))"
+      at evalCheck (/opt/src/question/problems/p3.ts:78:30)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at /opt/src/question/problems/p3.ts:27:33
+      at ContextImpl.context [as withConnection] (/opt/src/question/problems/common.ts:44:13)
+      at Problem3 (/opt/src/question/problems/p3.ts:11:32)
+      at args (/opt/src/question/problems/common.ts:21:9)
+      at main (/opt/src/question/index.ts:5:21) {
+    matcherResult: {
+      actual: '(!z.!y.(y z) (v f))',
+      expected: '!z.(z (v f))',
+      message: 'expect(received).toEqual(expected) // deep equality\n' +
+        '\n' +
+        'Expected: "!z.(z (v f))"\n' +
+        'Received: "(!z.!y.(y z) (v f))"',
+      name: 'toEqual',
+      pass: false
+    }
+  }
+}
