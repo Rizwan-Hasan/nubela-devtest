@@ -4,6 +4,14 @@ from typing import Optional
 from typing import Union
 
 
+@dataclass
+class LambdaCalculusExpression:
+    type: str
+    expression: str
+    left_hand_side: Union[str, None] = None
+    right_hand_side: Union[str, None] = None
+
+
 def response_for_problem_3(text: str) -> Optional[bytes]:
     """ Handling Expression - Problem 3 """
 
@@ -14,29 +22,33 @@ def response_for_problem_3(text: str) -> Optional[bytes]:
     expression = text['params']['expression']
     msg = {
         'id': text['id'],
-        'result': {
-            'expression': None
-        }
+        'result': {'expression': ''}
     }
-
     expression_obj = lambda_expression_helper(expression)
 
-    if expression_obj.type in ['Variable', 'Abstraction']:
+    if expression_obj.type != 'Application':
         msg['result']['expression'] = expression
         msg = json.dumps(msg).encode("utf-8") + b'\n'
         return msg
 
-    msg['result']['expression'] = 'rizwan'
+    # Handling Application
+    substituted_expression = do_substitution(
+        left_expression=expression_obj.left_hand_side,
+        right_expression=expression_obj.right_hand_side)
+
+    msg['result']['expression'] = substituted_expression.expression
     msg = json.dumps(msg).encode("utf-8") + b'\n'
     return msg
 
 
-@dataclass
-class LambdaCalculusExpression:
-    type: str
-    expression: str
-    left_hand_side: Union[str, None] = None
-    right_hand_side: Union[str, None] = None
+def do_substitution(left_expression: str, right_expression: str) -> LambdaCalculusExpression:
+    left_expression = lambda_expression_helper(left_expression)
+    right_expression = lambda_expression_helper(right_expression)
+
+    if left_expression.type == 'Variable':
+        return LambdaCalculusExpression(
+            expression=f'({left_expression.expression} {right_expression.expression})',
+            type='Application')
 
 
 def lambda_expression_helper(expression: str) -> LambdaCalculusExpression:
