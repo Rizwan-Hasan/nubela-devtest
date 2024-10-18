@@ -8,7 +8,7 @@ v = Variable('v')
 f = Variable('f')
 
 term = Abstraction(j, Abstraction(v, Application(v, j)))
-term = Application(term, Application(v, f))
+term_rhs = Application(v, f)
 
 print(term)
-
+print(term_rhs)

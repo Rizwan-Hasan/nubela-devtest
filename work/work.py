@@ -63,12 +63,15 @@ def lambda_expression_helper(expression: str):
 
 def main():
     expr_list = [
-        'x',
-        '!a.a',
-        '!x.!y.y'
-        '(!b.b i)',
-        '((!z.z b) !x.(b c))',
-        '(!z.!y.(y z) (v f))',
+        # 'x',
+        # '!a.a',
+        # '!x.!y.y'
+        # '(x y)',
+        # '(!b.b i)',
+        # '((!z.z b) !x.(b c))',
+        # '(!z.!y.(y z) (v f))',
+        # '(!j.!v.(v j) (v f))',
+        '(!x.(x !x.x) y)',
     ]
 
     for exp in expr_list:
