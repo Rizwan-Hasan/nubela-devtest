@@ -1,19 +1,46 @@
-from lambda_calculus import Variable, Abstraction, Application
-from lambda_calculus.visitors.normalisation import BetaNormalisingVisitor
-from typing import Union
+import json
 from dataclasses import dataclass
-from enum import Enum
+from typing import Optional
+from typing import Union
 
 
-def lambda_expression_helper(expression: str):
-    """ Finding middle point of LHS and RHS """
+def response_for_problem_3(text: str) -> Optional[bytes]:
+    """ Handling Expression - Problem 3 """
 
-    @dataclass
-    class LambdaCalculusExpression:
-        type: str
-        expression: str
-        left_hand_side: Union[str, None] = None
-        right_hand_side: Union[str, None] = None
+    if '"expression":' not in text:
+        return None
+
+    text: dict = json.loads(text)
+    expression = text['params']['expression']
+    msg = {
+        'id': text['id'],
+        'result': {
+            'expression': None
+        }
+    }
+
+    expression_obj = lambda_expression_helper(expression)
+
+    if expression_obj.type in ['Variable', 'Abstraction']:
+        msg['result']['expression'] = expression
+        msg = json.dumps(msg).encode("utf-8") + b'\n'
+        return msg
+
+    msg['result']['expression'] = 'rizwan'
+    msg = json.dumps(msg).encode("utf-8") + b'\n'
+    return msg
+
+
+@dataclass
+class LambdaCalculusExpression:
+    type: str
+    expression: str
+    left_hand_side: Union[str, None] = None
+    right_hand_side: Union[str, None] = None
+
+
+def lambda_expression_helper(expression: str) -> LambdaCalculusExpression:
+    """ Finding middle point of LHS and RHS for Problem 3 """
 
     # Checking if the expression is a Variable
     if len(expression) == 1:
@@ -59,29 +86,3 @@ def lambda_expression_helper(expression: str):
         right_hand_side=RHS,
         type='Application',
         expression=f'({LHS} {RHS})')
-
-
-
-
-def main():
-    expr_list = [
-        # 'x',
-        # '!a.a',
-        # '!x.!y.y'
-        # '(x y)',
-        # '(!b.b i)',
-        # '((!z.z b) !x.(b c))',
-        # '(!z.!y.(y z) (v f))',
-        # '(!j.!v.(v j) (v f))',
-        '(!x.(x !x.x) y)',
-    ]
-
-    for exp in expr_list:
-        print('================')
-        info = lambda_expression_helper(exp)
-        print(vars(info))
-        print(exp == info.expression)
-
-
-if __name__ == "__main__":
-    main()
