@@ -1,4 +1,5 @@
 import json
+import re
 from dataclasses import dataclass
 from typing import Optional
 from typing import Union
@@ -41,14 +42,17 @@ def response_for_problem_3(text: str) -> Optional[bytes]:
     return msg
 
 
-def do_substitution(left_expression: str, right_expression: str) -> LambdaCalculusExpression:
-    left_expression = lambda_expression_helper(left_expression)
-    right_expression = lambda_expression_helper(right_expression)
-
-    if left_expression.type == 'Variable':
+def do_substitution(left_expression: str, right_expression: str):
+    if lambda_expression_helper(left_expression).type == 'Variable':
         return LambdaCalculusExpression(
-            expression=f'({left_expression.expression} {right_expression.expression})',
+            expression=f'({left_expression} {right_expression})',
             type='Application')
+
+    first_argument: str = re.findall(r'\!\w', left_expression)[0]
+    expression = left_expression.replace(first_argument, '', 1).removeprefix('.').removeprefix(' ')
+
+    if expression.find(first_argument) == -1:
+        return lambda_expression_helper(expression.replace(first_argument.removeprefix('!'), right_expression))
 
 
 def lambda_expression_helper(expression: str) -> LambdaCalculusExpression:
