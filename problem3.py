@@ -54,7 +54,7 @@ def response_for_problem_3(text: str) -> Optional[bytes]:
             left_expression=expression.left_hand_side,
             right_expression=expression.right_hand_side)
 
-        if substitute.left_hand_side:
+        if substitute.left_hand_side and len(substitute.left_hand_side) > 1:
             list_of_substitution.append(substitute)
         elif og_right_used:
             msg['result']['expression'] = substitute.expression
