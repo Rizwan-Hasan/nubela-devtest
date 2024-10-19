@@ -29,19 +29,41 @@ def response_for_problem_3(text: str) -> Optional[bytes]:
     expression_obj = lambda_expression_helper(expression)
 
     if expression_obj.type != 'Application':
-        msg['result']['expression'] = expression
+        msg['result']['expression'] = expression_obj.expression
         msg = json.dumps(msg).encode("utf-8") + b'\n'
         return msg
 
     # Handling Application
-    substituted_expression = do_substitution(
-        left_expression=expression_obj.left_hand_side,
-        right_expression=expression_obj.right_hand_side)
+    og_right_used: bool = False
+    expr_type: str = expression_obj.type
+    list_of_substitution = [lambda_expression_helper(expression_obj.left_hand_side)]
+    while expr_type and expr_type == 'Application':
+        expression = list_of_substitution.pop()
 
-    if substituted_expression is not None:
-        msg['result']['expression'] = substituted_expression.expression
-    else:
-        msg['result']['expression'] = 'hello rizwan'
+        if not expression.left_hand_side and not expression.right_hand_side:
+            list_of_substitution.clear()
+            substitute = do_substitution(
+                left_expression=expression_obj.left_hand_side,
+                right_expression=expression_obj.right_hand_side)
+            msg['result']['expression'] = substitute.expression
+            og_right_used = True
+            expr_type = ''
+            break
+
+        substitute = do_substitution(
+            left_expression=expression.left_hand_side,
+            right_expression=expression.right_hand_side)
+
+        if substitute.left_hand_side:
+            list_of_substitution.append(substitute)
+        elif og_right_used:
+            msg['result']['expression'] = substitute.expression
+            break
+        else:
+            expr_type = 'Application'
+            list_of_substitution.append(
+                lambda_expression_helper(f'({substitute.expression} {expression_obj.right_hand_side})'))
+            og_right_used = True
 
     msg = json.dumps(msg).encode("utf-8") + b'\n'
     return msg
@@ -62,6 +84,7 @@ def do_substitution(left_expression: str, right_expression: str) -> LambdaCalcul
     first_argument: str = re.findall(r'\!\w', left_expression)[0]
     expression = left_expression.replace(first_argument, '', 1).removeprefix('.').removeprefix(' ')
 
+    # Naively replace for unique argument variable
     if expression.find(first_argument) == -1:
         right_expression_placeholder: str = 'R'
         new_expression: str = expression.replace(first_argument.removeprefix('!'), right_expression_placeholder)

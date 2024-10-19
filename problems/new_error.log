@@ -1,3 +1,4 @@
+❯ ./nubela-test.sh
 ------- Problem 1 ------
 -> {"id":0,"method":"echo","params":{"message":"Hello"}}
 <- {"id": 0, "result": {"message": "Hello"}}
@@ -24,7 +25,7 @@ Here is the link to Problem 2: https://nubela-gitlab-packages.sgp1.digitaloceans
 {
 <- {"id": 0, "result": {"message": "Hello"}}
 -> "id": "test", "method": "echo",
--> "params": {"message":
+-> "params": {"message": 
 -> "hello again"}}
 {
 <- {"id": "test", "result": {"message": "hello again"}}
@@ -43,83 +44,70 @@ For Problem 3, please visit: https://nubela-gitlab-packages.sgp1.digitaloceanspa
 ------- Problem 3 ------
 -------
 Expect: x -> x
-Randomized problem: d -> d
--> {"id":0,"method":"evaluate","params":{"expression":"d"}}
-<- {"id": 0, "result": {"expression": "d"}}
-Normalize result: d -> d
-d == d
+Randomized problem: p -> p
+-> {"id":0,"method":"evaluate","params":{"expression":"p"}}
+<- {"id": 0, "result": {"expression": "p"}}
+Normalize result: p -> p
+p == p
 -------
 Expect: !x.x -> !x.x
-Randomized problem: !d.d -> !z.z
--> {"id":1,"method":"evaluate","params":{"expression":"!d.d"}}
-<- {"id": 1, "result": {"expression": "!d.d"}}
-Normalize result: !d.d -> !z.z
+Randomized problem: !u.u -> !z.z
+-> {"id":1,"method":"evaluate","params":{"expression":"!u.u"}}
+<- {"id": 1, "result": {"expression": "!u.u"}}
+Normalize result: !u.u -> !z.z
 !z.z == !z.z
 -------
 Expect: (x y) -> (x y)
-Randomized problem: (e h) -> (e h)
--> {"id":2,"method":"evaluate","params":{"expression":"(e h)"}}
-<- {"id": 2, "result": {"expression": "(e h)"}}
-Normalize result: (e h) -> (e h)
-(e h) == (e h)
+Randomized problem: (u d) -> (u d)
+-> {"id":2,"method":"evaluate","params":{"expression":"(u d)"}}
+<- {"id": 2, "result": {"expression": "(u d)"}}
+Normalize result: (u d) -> (u d)
+(u d) == (u d)
 -------
 Expect: (!x.x y) -> y
-Randomized problem: (!h.h l) -> l
--> {"id":3,"method":"evaluate","params":{"expression":"(!h.h l)"}}
-<- {"id": 3, "result": {"expression": "l"}}
-Normalize result: l -> l
-l == l
+Randomized problem: (!u.u v) -> v
+-> {"id":3,"method":"evaluate","params":{"expression":"(!u.u v)"}}
+<- {"id": 3, "result": {"expression": "v"}}
+Normalize result: v -> v
+v == v
 -------
 Expect: (!x.x x) -> x
-Randomized problem: (!o.o o) -> o
--> {"id":4,"method":"evaluate","params":{"expression":"(!o.o o)"}}
-<- {"id": 4, "result": {"expression": "o"}}
-Normalize result: o -> o
-o == o
+Randomized problem: (!n.n n) -> n
+-> {"id":4,"method":"evaluate","params":{"expression":"(!n.n n)"}}
+<- {"id": 4, "result": {"expression": "n"}}
+Normalize result: n -> n
+n == n
 -------
 Expect: (!x.!y.(y x) (y w)) -> !z.(z (y w))
-Randomized problem: (!r.!n.(n r) (n u)) -> !z.(z (n u))
--> {"id":5,"method":"evaluate","params":{"expression":"(!r.!n.(n r) (n u))"}}
-<- {"id": 5, "result": {"expression": "!t.(t (n u))"}}
-Normalize result: !t.(t (n u)) -> !z.(z (n u))
-!z.(z (n u)) == !z.(z (n u))
+Randomized problem: (!n.!y.(y n) (y a)) -> !z.(z (y a))
+-> {"id":5,"method":"evaluate","params":{"expression":"(!n.!y.(y n) (y a))"}}
+<- {"id": 5, "result": {"expression": "!i.(i (y a))"}}
+Normalize result: !i.(i (y a)) -> !z.(z (y a))
+!z.(z (y a)) == !z.(z (y a))
 -------
 Expect: (!x.!y.(x y) (y w)) -> !z.((y w) z)
-Randomized problem: (!o.!n.(o n) (n m)) -> !z.((n m) z)
--> {"id":6,"method":"evaluate","params":{"expression":"(!o.!n.(o n) (n m))"}}
-<- {"id": 6, "result": {"expression": "!t.((n m) t)"}}
-Normalize result: !t.((n m) t) -> !z.((n m) z)
-!z.((n m) z) == !z.((n m) z)
+Randomized problem: (!k.!h.(k h) (h o)) -> !z.((h o) z)
+-> {"id":6,"method":"evaluate","params":{"expression":"(!k.!h.(k h) (h o))"}}
+<- {"id": 6, "result": {"expression": "!i.((h o) i)"}}
+Normalize result: !i.((h o) i) -> !z.((h o) z)
+!z.((h o) z) == !z.((h o) z)
 -------
 Expect: ((!y.!x.(y x) !x.!y.(y x)) (y w)) -> !a.(a (y w))
-Randomized problem: ((!x.!g.(x g) !g.!x.(x g)) (x d)) -> !z.(z (x d))
--> {"id":7,"method":"evaluate","params":{"expression":"((!x.!g.(x g) !g.!x.(x g)) (x d))"}}
-<- {"id": 7, "result": {"expression": "hello rizwan"}}
-Normalize result: hello rizwan -> h
+Randomized problem: ((!f.!l.(f l) !l.!f.(f l)) (f a)) -> !z.(z (f a))
+-> {"id":7,"method":"evaluate","params":{"expression":"((!f.!l.(f l) !l.!f.(f l)) (f a))"}}
+<- {"id": 7, "result": {"expression": "!c.(c (f a))"}}
+Normalize result: !c.(c (f a)) -> !z.(z (f a))
+!z.(z (f a)) == !z.(z (f a))
+-------
+Expect: ((!y.!x.(y x) !x.(x x)) y) -> (y y)
+Randomized problem: ((!n.!k.(n k) !k.(k k)) n) -> (n n)
+-> {"id":8,"method":"evaluate","params":{"expression":"((!n.!k.(n k) !k.(k k)) n)"}}
 Error: Error while checking problem
     at checkProblems (/opt/src/question/problems/common.ts:24:19)
     at process.args (node:internal/process/task_queues:95:5)
     at main (/opt/src/question/index.ts:5:21) {
-  [cause]: JestAssertionError: expect(received).toEqual(expected) // deep equality
-
-  Expected: "!z.(z (x d))"
-  Received: "h"
-      at evalCheck (/opt/src/question/problems/p3.ts:78:30)
-      at processTicksAndRejections (node:internal/process/task_queues:95:5)
-      at /opt/src/question/problems/p3.ts:29:44
-      at ContextImpl.context [as withConnection] (/opt/src/question/problems/common.ts:44:13)
-      at Problem3 (/opt/src/question/problems/p3.ts:11:32)
-      at args (/opt/src/question/problems/common.ts:21:9)
-      at main (/opt/src/question/index.ts:5:21) {
-    matcherResult: {
-      actual: 'h',
-      expected: '!z.(z (x d))',
-      message: 'expect(received).toEqual(expected) // deep equality\n' +
-        '\n' +
-        'Expected: "!z.(z (x d))"\n' +
-        'Received: "h"',
-      name: 'toEqual',
-      pass: false
-    }
-  }
+  [cause]: TimeoutError: Timed out
+      at Timeout._onTimeout (/opt/src/question/timed.ts:5:37)
+      at listOnTimeout (node:internal/timers:564:17)
+      at processTimers (node:internal/timers:507:7)
 }
