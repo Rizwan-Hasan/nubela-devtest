@@ -43,67 +43,81 @@ For Problem 3, please visit: https://nubela-gitlab-packages.sgp1.digitaloceanspa
 ------- Problem 3 ------
 -------
 Expect: x -> x
-Randomized problem: y -> y
--> {"id":0,"method":"evaluate","params":{"expression":"y"}}
-<- {"id": 0, "result": {"expression": "y"}}
-Normalize result: y -> y
-y == y
+Randomized problem: d -> d
+-> {"id":0,"method":"evaluate","params":{"expression":"d"}}
+<- {"id": 0, "result": {"expression": "d"}}
+Normalize result: d -> d
+d == d
 -------
 Expect: !x.x -> !x.x
-Randomized problem: !t.t -> !z.z
--> {"id":1,"method":"evaluate","params":{"expression":"!t.t"}}
-<- {"id": 1, "result": {"expression": "!t.t"}}
-Normalize result: !t.t -> !z.z
+Randomized problem: !d.d -> !z.z
+-> {"id":1,"method":"evaluate","params":{"expression":"!d.d"}}
+<- {"id": 1, "result": {"expression": "!d.d"}}
+Normalize result: !d.d -> !z.z
 !z.z == !z.z
 -------
 Expect: (x y) -> (x y)
-Randomized problem: (j b) -> (j b)
--> {"id":2,"method":"evaluate","params":{"expression":"(j b)"}}
-<- {"id": 2, "result": {"expression": "(j b)"}}
-Normalize result: (j b) -> (j b)
-(j b) == (j b)
+Randomized problem: (e h) -> (e h)
+-> {"id":2,"method":"evaluate","params":{"expression":"(e h)"}}
+<- {"id": 2, "result": {"expression": "(e h)"}}
+Normalize result: (e h) -> (e h)
+(e h) == (e h)
 -------
 Expect: (!x.x y) -> y
-Randomized problem: (!o.o b) -> b
--> {"id":3,"method":"evaluate","params":{"expression":"(!o.o b)"}}
-<- {"id": 3, "result": {"expression": "b"}}
-Normalize result: b -> b
-b == b
+Randomized problem: (!h.h l) -> l
+-> {"id":3,"method":"evaluate","params":{"expression":"(!h.h l)"}}
+<- {"id": 3, "result": {"expression": "l"}}
+Normalize result: l -> l
+l == l
 -------
 Expect: (!x.x x) -> x
-Randomized problem: (!q.q q) -> q
--> {"id":4,"method":"evaluate","params":{"expression":"(!q.q q)"}}
-<- {"id": 4, "result": {"expression": "q"}}
-Normalize result: q -> q
-q == q
+Randomized problem: (!o.o o) -> o
+-> {"id":4,"method":"evaluate","params":{"expression":"(!o.o o)"}}
+<- {"id": 4, "result": {"expression": "o"}}
+Normalize result: o -> o
+o == o
 -------
 Expect: (!x.!y.(y x) (y w)) -> !z.(z (y w))
-Randomized problem: (!j.!y.(y j) (y p)) -> !z.(z (y p))
--> {"id":5,"method":"evaluate","params":{"expression":"(!j.!y.(y j) (y p))"}}
-<- {"id": 5, "result": {"expression": "!y.(y (y p))"}}
-Normalize result: !y.(y (y p)) -> !z.(z (z p))
+Randomized problem: (!r.!n.(n r) (n u)) -> !z.(z (n u))
+-> {"id":5,"method":"evaluate","params":{"expression":"(!r.!n.(n r) (n u))"}}
+<- {"id": 5, "result": {"expression": "!t.(t (n u))"}}
+Normalize result: !t.(t (n u)) -> !z.(z (n u))
+!z.(z (n u)) == !z.(z (n u))
+-------
+Expect: (!x.!y.(x y) (y w)) -> !z.((y w) z)
+Randomized problem: (!o.!n.(o n) (n m)) -> !z.((n m) z)
+-> {"id":6,"method":"evaluate","params":{"expression":"(!o.!n.(o n) (n m))"}}
+<- {"id": 6, "result": {"expression": "!t.((n m) t)"}}
+Normalize result: !t.((n m) t) -> !z.((n m) z)
+!z.((n m) z) == !z.((n m) z)
+-------
+Expect: ((!y.!x.(y x) !x.!y.(y x)) (y w)) -> !a.(a (y w))
+Randomized problem: ((!x.!g.(x g) !g.!x.(x g)) (x d)) -> !z.(z (x d))
+-> {"id":7,"method":"evaluate","params":{"expression":"((!x.!g.(x g) !g.!x.(x g)) (x d))"}}
+<- {"id": 7, "result": {"expression": "hello rizwan"}}
+Normalize result: hello rizwan -> h
 Error: Error while checking problem
     at checkProblems (/opt/src/question/problems/common.ts:24:19)
     at process.args (node:internal/process/task_queues:95:5)
     at main (/opt/src/question/index.ts:5:21) {
   [cause]: JestAssertionError: expect(received).toEqual(expected) // deep equality
 
-  Expected: "!z.(z (y p))"
-  Received: "!z.(z (z p))"
+  Expected: "!z.(z (x d))"
+  Received: "h"
       at evalCheck (/opt/src/question/problems/p3.ts:78:30)
       at processTicksAndRejections (node:internal/process/task_queues:95:5)
-      at /opt/src/question/problems/p3.ts:27:33
+      at /opt/src/question/problems/p3.ts:29:44
       at ContextImpl.context [as withConnection] (/opt/src/question/problems/common.ts:44:13)
       at Problem3 (/opt/src/question/problems/p3.ts:11:32)
       at args (/opt/src/question/problems/common.ts:21:9)
       at main (/opt/src/question/index.ts:5:21) {
     matcherResult: {
-      actual: '!z.(z (z p))',
-      expected: '!z.(z (y p))',
+      actual: 'h',
+      expected: '!z.(z (x d))',
       message: 'expect(received).toEqual(expected) // deep equality\n' +
         '\n' +
-        'Expected: "!z.(z (y p))"\n' +
-        'Received: "!z.(z (z p))"',
+        'Expected: "!z.(z (x d))"\n' +
+        'Received: "h"',
       name: 'toEqual',
       pass: false
     }
