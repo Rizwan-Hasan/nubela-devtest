@@ -42,15 +42,14 @@ def response_for_problem_3(text: str) -> Optional[bytes]:
     return msg
 
 
-def do_substitution(left_expression: str, right_expression: str):
+def do_substitution(left_expression: str, right_expression: str) -> LambdaCalculusExpression:
     if lambda_expression_helper(left_expression).type == 'Variable':
-        return LambdaCalculusExpression(
-            expression=f'({left_expression} {right_expression})',
-            type='Application')
+        return lambda_expression_helper(f'({left_expression} {right_expression})')
 
     first_argument: str = re.findall(r'\!\w', left_expression)[0]
     expression = left_expression.replace(first_argument, '', 1).removeprefix('.').removeprefix(' ')
 
+    # Naively replace for unique argument variable
     if expression.find(first_argument) == -1:
         return lambda_expression_helper(expression.replace(first_argument.removeprefix('!'), right_expression))
 
